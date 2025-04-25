@@ -55,27 +55,29 @@ CREATE TABLE deadlines (
   delta text NOT NULL
 );
 
+-- Document categories
 CREATE TABLE categories (
-  id     serial      PRIMARY KEY,
-  title  text        NOT NULL
+  id serial PRIMARY KEY,
+  title text NOT NULL,
+  description text NOT NULL DEFAULT 'No description provided'
 );
 
--- Subcategorias vinculadas a uma categoria
+-- Subcategories linked to categories
 CREATE TABLE subcategories (
-  id           serial      PRIMARY KEY,
-  category_id  integer     NOT NULL
+  id serial PRIMARY KEY,
+  category_id integer NOT NULL
     REFERENCES categories(id)
     ON DELETE CASCADE,
-  title        text        NOT NULL
+  title text NOT NULL
 );
 
--- Itens de arquivos: cada upload fica registrado aqui
+-- File items for each subcategory
 CREATE TABLE file_items (
-  id             serial      PRIMARY KEY,
-  subcategory_id integer     NOT NULL
+  id serial PRIMARY KEY,
+  subcategory_id integer NOT NULL
     REFERENCES subcategories(id)
     ON DELETE CASCADE,
-  name           text        NOT NULL,
-  url            text        NOT NULL,
-  uploaded_at    timestamp   NOT NULL DEFAULT now()
+  name text NOT NULL,
+  url text NOT NULL,
+  uploaded_at timestamp NOT NULL DEFAULT now()
 );

@@ -1,5 +1,3 @@
--- supabase/seed.sql
-
 -- 1) Dashboard metrics
 INSERT INTO dashboard_metrics (metric_key, metric_value) VALUES
   ('pending_files', 12),
@@ -45,13 +43,20 @@ INSERT INTO deadlines (label, info, delta) VALUES
   ('Q2 Financial Report','2 files required','10 months left'),
   ('Tax Documentation','1 file required','12 months left');
 
+-- 8) Document categories
+INSERT INTO categories (title, description) VALUES
+  ('Annual Statements', 'Yearly financial statements and compliance documents'),
+  ('Projects', 'Project deliverables and documentation');
 
-INSERT INTO categories (title) VALUES
-  ('Annual Statements'),
-  ('Projects');
-
--- Insere subcategorias ligadas às categories
+-- 9) Subcategories linked to categories
 INSERT INTO subcategories (category_id, title) VALUES
   ((SELECT id FROM categories WHERE title = 'Annual Statements'), 'Financial Statements'),
   ((SELECT id FROM categories WHERE title = 'Annual Statements'), 'Audit Reports'),
   ((SELECT id FROM categories WHERE title = 'Projects'),           'Project Alpha');
+
+-- 10) Sample file items per subcategory
+INSERT INTO file_items (subcategory_id, name, url, uploaded_at) VALUES
+  ((SELECT id FROM subcategories WHERE title = 'Financial Statements'), 'Annual_Report_2024.pdf',        'https://example.com/files/Annual_Report_2024.pdf',      '2024-04-10'),
+  ((SELECT id FROM subcategories WHERE title = 'Financial Statements'), 'Q1_Financial_Report.xlsx',     'https://example.com/files/Q1_Financial_Report.xlsx',     '2024-04-18'),
+  ((SELECT id FROM subcategories WHERE title = 'Audit Reports'),          'Audit_Report_2024.pdf',         'https://example.com/files/Audit_Report_2024.pdf',         '2024-04-15'),
+  ((SELECT id FROM subcategories WHERE title = 'Project Alpha'),          'Project_Alpha_Kickoff.docx',    'https://example.com/files/Project_Alpha_Kickoff.docx',    '2024-05-01');

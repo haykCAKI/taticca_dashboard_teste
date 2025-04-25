@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import {
   Search,
   Bell,
@@ -9,8 +10,8 @@ import {
   UploadCloud,
   ArrowRight,
 } from 'lucide-react'
-import { useDashboard } from '@/hook/useDashBoard'
-import { Categories } from '@/components/Categories'
+
+import { useDashboard } from '@/hooks/useDashBoard'
 
 export default function SmartRepositoryPage() {
   const {
@@ -24,7 +25,7 @@ export default function SmartRepositoryPage() {
 
   return (
     <div className="flex h-screen text-gray-800 bg-gray-50">
-      {/* ─── SIDEBAR ─────────────────────────────────────────── */}
+      {/* SIDEBAR */}
       <aside className="w-64 border-r border-gray-200 p-6 flex flex-col">
         <h2 className="mb-8 text-xl font-bold">Smart Repository</h2>
 
@@ -40,10 +41,15 @@ export default function SmartRepositoryPage() {
               <span>{label}</span>
             </a>
           ))}
+          {/* Categories Link: ajustado para o path real */}
+          <Link
+            href="/categories"
+            className="flex items-center space-x-2 text-gray-700 hover:text-black"
+          >
+            <FileText className="w-5 h-5 text-gray-500" />
+            <span>Categories</span>
+          </Link>
         </nav>
-
-        {/* Categories */}
-        <Categories />
 
         {/* Account */}
         <div className="mb-4 text-sm font-semibold text-gray-500 uppercase">
@@ -64,7 +70,7 @@ export default function SmartRepositoryPage() {
         </nav>
       </aside>
 
-      {/* ─── MAIN CONTENT ────────────────────────────────────── */}
+      {/* MAIN CONTENT */}
       <div className="flex-1 flex flex-col overflow-auto">
         {/* Header */}
         <header className="flex items-center justify-between p-6 border-b border-gray-200">
@@ -94,7 +100,7 @@ export default function SmartRepositoryPage() {
         </header>
 
         <main className="p-6 space-y-8">
-          {/* ─── STATS CARDS (coloridos) ────────────────────────── */}
+          {/* STATS CARDS */}
           <div className="grid grid-cols-4 gap-6">
             {stats.map(({ label, count, delta, icon, bg }) => (
               <div key={label} className={`p-4 rounded-lg shadow-sm ${bg}`}>
@@ -110,7 +116,7 @@ export default function SmartRepositoryPage() {
             ))}
           </div>
 
-          {/* ─── RECENT FILES ──────────────────────────────────── */}
+          {/* RECENT FILES */}
           <section className="rounded-lg bg-white shadow-sm p-6">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-semibold">Recent Files</h2>
@@ -164,7 +170,7 @@ export default function SmartRepositoryPage() {
             </div>
           </section>
 
-          {/* ─── UPLOAD + WIDGETS ───────────────────────────────── */}
+          {/* UPLOAD + WIDGETS */}
           <div className="grid grid-cols-3 gap-6">
             <div className="col-span-2 flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-200 bg-white p-6 shadow-sm">
               <UploadCloud className="mb-4 w-12 h-12 text-gray-400" />
@@ -192,9 +198,7 @@ export default function SmartRepositoryPage() {
 
             {/* Deadlines */}
             <section className="space-y-3 rounded-lg bg-white p-4 shadow-sm">
-              <h3 className="mb-3 text-md font-semibold">
-                Upcoming Deadlines
-              </h3>
+              <h3 className="mb-3 text-md font-semibold">Upcoming Deadlines</h3>
               <ul className="text-sm">
                 {deadlines.map(({ label, info, delta }, i) => (
                   <li
@@ -205,9 +209,7 @@ export default function SmartRepositoryPage() {
                       <p className="font-medium">{label}</p>
                       <p className="text-gray-500">{info}</p>
                     </div>
-                    <span className="rounded-full bg-red-100 px-2 py-1 text-xs text-red-800">
-                      {delta}
-                    </span>
+                    <span className="rounded-full bg-red-100 px-2 py-1 text-xs text-red-800">{delta}</span>
                   </li>
                 ))}
               </ul>
